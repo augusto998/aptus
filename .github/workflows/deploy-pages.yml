@@ -29,7 +29,7 @@ jobs:
       - name: Upload APTUS frontend
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './frontend-pages'
+          path: './aptus_project/aptus_project/frontend-pages'
 
       - name: Deploy to GitHub Pages
         id: deployment
