@@ -1,1 +1,0 @@
-APTUS uses CSS-generated avatars by default, so no binary image is required for the demo.
