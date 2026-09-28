@@ -1,0 +1,92 @@
+-- APTUS PostgreSQL schema
+-- EXACTLY 10 TABLES
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(40) UNIQUE NOT NULL,
+  email VARCHAR(120) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('user','nutritionist')),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_profiles (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  display_name VARCHAR(80) NOT NULL,
+  bio TEXT DEFAULT '',
+  goal VARCHAR(120) DEFAULT 'Construir hábitos mais saudáveis',
+  avatar_url VARCHAR(500) DEFAULT '/static/img/default-avatar.svg'
+);
+
+CREATE TABLE IF NOT EXISTS nutritionists (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  professional_registration VARCHAR(50) UNIQUE NOT NULL,
+  specialty VARCHAR(120) DEFAULT 'Nutrição clínica',
+  about TEXT DEFAULT '',
+  verified BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+  id SERIAL PRIMARY KEY,
+  author_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  caption TEXT NOT NULL,
+  media_url VARCHAR(500) DEFAULT '',
+  media_type VARCHAR(20) DEFAULT 'image',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+  author_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  body TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS likes (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_like_post_user UNIQUE (post_id, user_id)
+);
+
+CREATE TABLE IF NOT EXISTS recipes (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER UNIQUE NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+  title VARCHAR(120) NOT NULL,
+  ingredients TEXT NOT NULL,
+  instructions TEXT NOT NULL,
+  prep_minutes INTEGER NOT NULL DEFAULT 20 CHECK (prep_minutes > 0)
+);
+
+CREATE TABLE IF NOT EXISTS follows (
+  id SERIAL PRIMARY KEY,
+  follower_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  following_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_follow_pair UNIQUE (follower_id, following_id),
+  CONSTRAINT ck_no_self_follow CHECK (follower_id <> following_id)
+);
+
+CREATE TABLE IF NOT EXISTS consultations (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  nutritionist_id INTEGER NOT NULL REFERENCES nutritionists(id) ON DELETE CASCADE,
+  scheduled_at TIMESTAMP NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'requested',
+  notes TEXT DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+  id SERIAL PRIMARY KEY,
+  sender_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  receiver_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  consultation_id INTEGER NULL REFERENCES consultations(id) ON DELETE SET NULL,
+  body TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- COUNT: 10 TABLES

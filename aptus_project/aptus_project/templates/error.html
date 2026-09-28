@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block title %}Erro {{ code }} — APTUS{% endblock %}{% block body %}<div class="auth-shell"><div class="auth-card"><div class="brand">✦ APTUS</div><h1>{{ code }}</h1><p class="muted">{{ message }}</p><a class="btn primary" href="{{ url_for('main.home') if current_user else url_for('main.index') }}">Voltar</a></div></div>{% endblock %}

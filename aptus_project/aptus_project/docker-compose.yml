@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: aptus-postgres
+    environment:
+      POSTGRES_DB: aptus
+      POSTGRES_USER: aptus
+      POSTGRES_PASSWORD: aptus
+    ports:
+      - "5432:5432"
+    volumes:
+      - aptus_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aptus -d aptus"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  aptus_pgdata:
