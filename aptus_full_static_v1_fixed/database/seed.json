@@ -1,0 +1,8 @@
+{
+  "note": "Seed demonstrativo correspondente à versão GitHub Pages. O runtime usa IndexedDB; este arquivo é uma referência de dados iniciais.",
+  "demo_users": [
+    {"username":"lucas","password":"Aptus@123","role":"user"},
+    {"username":"marina.nutri","password":"Aptus@123","role":"nutritionist"}
+  ],
+  "tables": ["users","user_profiles","nutritionists","posts","comments","likes","recipes","follows","consultations","messages"]
+}

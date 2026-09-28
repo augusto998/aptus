@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <title>APTUS — Saúde que cabe na rotina</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <main id="auth-view" class="auth-shell">
+    <section class="brand-panel">
+      <div class="brand-mark">A</div>
+      <div>
+        <span class="eyebrow">APTUS</span>
+        <h1>Saúde que cabe na rotina.</h1>
+        <p>Uma rede social para compartilhar hábitos, receitas e conhecimento com apoio profissional.</p>
+      </div>
+      <div class="brand-points">
+        <div><span>01</span><strong>Conteúdo</strong><small>Receitas e curiosidades em um feed vertical.</small></div>
+        <div><span>02</span><strong>Acompanhamento</strong><small>Contato com nutricionistas pela própria plataforma.</small></div>
+        <div><span>03</span><strong>Comunidade</strong><small>Interaja, siga pessoas e compartilhe evolução.</small></div>
+      </div>
+      <div class="quote-card">“Pequenas escolhas repetidas todos os dias constroem resultados sustentáveis.”</div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-head">
+        <div class="logo-word">APTUS<span>.</span></div>
+        <span class="status-pill">Demo local</span>
+      </div>
+
+      <div class="auth-switcher" role="tablist">
+        <button class="auth-tab active" data-auth="user">Sou usuário</button>
+        <button class="auth-tab" data-auth="nutritionist">Sou nutricionista</button>
+      </div>
+
+      <form id="user-login-form" class="auth-form">
+        <h2>Entrar na sua conta</h2>
+        <p class="muted">Acesse seu perfil, conteúdo e acompanhamento.</p>
+        <label>Usuário ou e-mail<input id="user-login" autocomplete="username" required placeholder="lucas"></label>
+        <label>Senha<input id="user-password" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
+        <button class="primary-btn" type="submit">Entrar como usuário</button>
+        <div class="demo-box"><b>Demo:</b> lucas / Aptus@123</div>
+      </form>
+
+      <form id="nutritionist-login-form" class="auth-form hidden">
+        <h2>Área profissional</h2>
+        <p class="muted">Entre no painel exclusivo do nutricionista.</p>
+        <label>Usuário ou e-mail<input id="nutri-login" autocomplete="username" required placeholder="marina.nutri"></label>
+        <label>Senha<input id="nutri-password" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
+        <button class="primary-btn" type="submit">Entrar como nutricionista</button>
+        <div class="demo-box"><b>Demo:</b> marina.nutri / Aptus@123</div>
+      </form>
+
+      <div class="auth-foot">Versão GitHub Pages · sem backend externo · dados persistidos no navegador.</div>
+    </section>
+  </main>
+
+  <div id="app-view" class="app hidden">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobile-menu">☰</button>
+        <div class="logo-word">APTUS<span>.</span></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="notification-btn" title="Notificações">♧</button>
+        <button class="profile-chip" id="header-profile"></button>
+        <button class="ghost-btn" id="logout-btn">Sair</button>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="sidebar" id="sidebar">
+        <nav id="user-nav" class="side-nav">
+          <button class="nav-btn active" data-view="home">⌂ <span>Início</span></button>
+          <button class="nav-btn" data-view="discover">◉ <span>Descobrir</span></button>
+          <button class="nav-btn" data-view="nutritionist">✦ <span>Nutricionista</span></button>
+        </nav>
+        <nav id="nutritionist-nav" class="side-nav hidden">
+          <button class="nav-btn active" data-view="pro-home">⌂ <span>Painel</span></button>
+          <button class="nav-btn" data-view="discover">◉ <span>Conteúdo</span></button>
+          <button class="nav-btn" data-view="pro-messages">✉ <span>Mensagens</span></button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="mini-card"><span class="dot"></span><div><b>Modo demo</b><small>Seu conteúdo fica salvo neste navegador.</small></div></div>
+        </div>
+      </aside>
+
+      <section class="content" id="content">
+        <!-- rendered by app.js -->
+      </section>
+    </div>
+
+    <button class="floating-create" id="floating-create">＋</button>
+
+    <div id="modal" class="modal hidden">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-card" id="modal-card"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
